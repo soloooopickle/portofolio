@@ -1013,7 +1013,7 @@ nav a.is-active {
   }
 
   .site-header.is-project-nav {
-    width: calc(100vw - 24px);
+    width: calc(100vw - 12px);
     height: 60px;
     padding: 0;
   }
@@ -1022,7 +1022,7 @@ nav a.is-active {
 
   .site-header.is-project-nav nav {
     position: absolute;
-    inset: 0 10px auto;
+    inset: 0 6px auto;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 0;
     height: 54px;
@@ -1030,7 +1030,12 @@ nav a.is-active {
     border: 0;
     background: transparent;
     overflow: hidden;
-    font-size: 7px;
+    font-size: clamp(6px, 1.85vw, 7px);
+  }
+
+  .site-header.is-project-nav nav a {
+    letter-spacing: .02em;
+    transform: scale(.94);
   }
 
   .site-header.is-project-nav .project-nav-contact { font-size: 0; }
@@ -1075,8 +1080,25 @@ nav a.is-active {
   .directory-preview { display: none; }
   .directory-light { filter: blur(18px); }
 
-  .project-index { min-height: 620px; }
-  .project-section { scroll-margin-top: 102px; }
+  .project-index { min-height: 0; }
+  .project-section {
+    height: 100svh;
+    min-height: 0;
+    scroll-margin-top: 58px;
+  }
+
+  .project-section::before,
+  .project-section::after {
+    position: absolute;
+    z-index: 55;
+    top: 50%;
+    color: rgba(17, 17, 15, .46);
+    font: 400 14px/1 var(--font-geist-mono), monospace;
+    pointer-events: none;
+  }
+
+  .project-section::before { content: "‹"; left: 12px; }
+  .project-section::after { content: "›"; right: 12px; }
 
   .project-heading { top: 0; min-height: 58px; padding: 0 18px; }
 
@@ -1108,12 +1130,19 @@ nav a.is-active {
   }
 
   .masonry-grid { inset: 58px 0 0; }
-  .deck-viewer { width: 88vw; height: min(66vh, 620px); }
-  .website-viewer { width: 88vw; height: min(66vh, 620px); }
-  .deck-actions { right: -1px; gap: 10px; font-size: 7px; }
+  .deck-viewer { width: 76vw; height: min(62svh, 560px); }
+  .website-viewer { width: 76vw; height: min(62svh, 560px); }
+  .deck-actions { right: -1px; max-width: 76vw; gap: 7px; padding: 7px 8px; font-size: 6px; }
   .website-launch { font-size: 7px; }
   .page-cursor { display: none; }
   .page-status { bottom: 16px; }
+}
+
+@media (max-width: 380px) {
+  .site-header.is-project-nav .project-nav-contact { display: none; }
+  .site-header.is-project-nav nav a:nth-child(5) { grid-column: 7; }
+  .project-heading { padding: 0 12px; }
+  .project-heading span { font-size: 7px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

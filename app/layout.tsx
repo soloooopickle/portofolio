@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,14 +13,34 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "RachelDDD — Visual Designer",
-  description: "RachelDDD 的视觉设计与创意作品集。",
-  icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const requestHeaders = await headers();
+  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
+  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  const metadataBase = new URL(`${protocol}://${host}`);
+
+  return {
+    metadataBase,
+    title: "RachelDDD — Visual Designer",
+    description: "Ding Zhiyin 的视觉设计与创意作品集，涵盖 AI、海报、绘画书法、PPT 与摄影作品。",
+    icons: {
+      icon: "/favicon.svg",
+      shortcut: "/favicon.svg",
+    },
+    openGraph: {
+      title: "RachelDDD — Visual Designer",
+      description: "Ding Zhiyin 的视觉设计与创意作品集。",
+      type: "website",
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: "RachelDDD Visual Design Portfolio" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "RachelDDD — Visual Designer",
+      description: "Ding Zhiyin 的视觉设计与创意作品集。",
+      images: ["/og.png"],
+    },
+  };
+}
 
 export default function RootLayout({
   children,
