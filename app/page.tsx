@@ -86,7 +86,7 @@ const projectSections: ProjectSection[] = [
     slideGrid: true,
     items: [
       { src: "/projects/ppt/decks/simulation-analysis-of-structural-resilience.pdf", alt: "Simulation Analysis of Structural Resilience 完整演示文稿", label: "Simulation Analysis of Structural Resilience", type: "deck", pages: 23, downloadSrc: "/projects/ppt/decks/simulation-analysis-of-structural-resilience.pdf", downloadLabel: "DOWNLOAD" },
-      { src: "/projects/ppt/decks/waterloo-south-renewal-project.pdf", alt: "WATERLOO SOUTH RENEWAL PROJECT 完整演示文稿", label: "WATERLOO SOUTH RENEWAL PROJECT", type: "deck", pages: 34, downloadSrc: "/projects/ppt/decks/waterloo-south-renewal-project.pptx", downloadLabel: "DOWNLOAD PPTX" },
+      { src: "/projects/ppt/decks/waterloo-south-renewal-project.pdf", alt: "WATERLOO SOUTH RENEWAL PROJECT 完整演示文稿", label: "WATERLOO SOUTH RENEWAL PROJECT", type: "deck", pages: 34, downloadSrc: "https://raw.githubusercontent.com/soloooopickle/portofolio/main/public/projects/ppt/decks/waterloo-south-renewal-project.pptx", downloadLabel: "DOWNLOAD PPTX" },
       { src: "/projects/ppt/decks/poster.pdf", alt: "poster 完整演示文稿", label: "poster", type: "deck", pages: 1, downloadSrc: "/projects/ppt/decks/poster.pptx", downloadLabel: "DOWNLOAD PPTX" },
     ],
   },
