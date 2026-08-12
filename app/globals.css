@@ -866,6 +866,26 @@ nav a:hover::after,
   text-underline-offset: 3px;
 }
 
+.website-fallback {
+  position: absolute;
+  z-index: 4;
+  right: 10px;
+  bottom: 10px;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  background: rgba(248, 248, 245, .94);
+  color: var(--ink);
+  font: 400 7px/1 -apple-system, BlinkMacSystemFont, sans-serif;
+  letter-spacing: .06em;
+}
+
+.website-fallback a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .deck-viewer {
   position: relative;
   width: min(72vw, 1080px);
@@ -1139,6 +1159,7 @@ nav a.is-active {
   .website-viewer { width: 76vw; height: min(62svh, 560px); }
   .deck-actions { right: -1px; max-width: 76vw; gap: 7px; padding: 7px 8px; font-size: 6px; }
   .website-launch { font-size: 7px; }
+  .website-fallback { display: flex; }
   .page-cursor { display: none; }
   .page-status { bottom: 16px; }
 }
