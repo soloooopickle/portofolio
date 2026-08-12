@@ -40,7 +40,7 @@ const projectSections: ProjectSection[] = [
     items: [
       { src: "https://nmti-testing.netlify.app/", alt: "nmti-testing.netlify.app 网站作品", label: "nmti-testing.netlify.app", type: "website" },
       { src: "https://forseason.netlify.app/", alt: "forseason.netlify.app 网站作品", label: "forseason.netlify.app", type: "website" },
-      { src: "/projects/ai/birthday-gift-web.mp4", alt: "生日礼盒", label: "生日礼盒", type: "video" },
+      { src: "https://raw.githubusercontent.com/soloooopickle/portofolio/main/public/projects/ai/birthday-gift-web.mp4", alt: "生日礼盒", label: "生日礼盒", type: "video" },
       { src: "/projects/ai/character-guide.png", alt: "角色图鉴", label: "角色图鉴" },
       { src: "/projects/ai/app-overview.jpg", alt: "app概览", label: "app概览" },
       { src: "/projects/ai/puppy.jpg", alt: "角色形象puppy", label: "角色形象puppy" },
