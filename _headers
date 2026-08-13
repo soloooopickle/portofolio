@@ -9,3 +9,7 @@
 /app/*.css
   Content-Type: text/css; charset=utf-8
   X-Content-Type-Options: nosniff
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/public/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
