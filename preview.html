@@ -104,10 +104,10 @@
         <header class="project-heading"><span>04</span><h2>PRESENTATION</h2><span>03 DECKS</span></header>
         <div class="masonry-grid masonry-grid--slides">
           <figure class="project-item project-item--deck">
-            <div class="deck-viewer"><div class="ppt-reader" data-path="public/projects/ppt/slides/simulation" data-pages="23" data-pad="2" aria-label="Simulation Analysis of Structural Resilience，左右滑动查看全部23页"><div class="ppt-track" tabindex="0"></div><button class="ppt-arrow ppt-prev" type="button" aria-label="上一页">‹</button><button class="ppt-arrow ppt-next" type="button" aria-label="下一页">›</button><div class="ppt-progress"><span>01</span><i></i><span>23</span></div></div></div><figcaption>Simulation Analysis of Structural Resilience</figcaption>
+            <div class="deck-viewer"><div class="ppt-reader" data-path="public/projects/ppt/slides/simulation" data-pages="23" data-pad="2" aria-label="Simulation Analysis of Structural Resilience，向下滚动查看全部23页"><div class="ppt-track" tabindex="0"></div><button class="ppt-arrow ppt-prev" type="button" aria-label="上一页">↑</button><button class="ppt-arrow ppt-next" type="button" aria-label="下一页">↓</button><div class="ppt-progress"><span>01</span><i></i><span>23</span></div></div></div><figcaption>Simulation Analysis of Structural Resilience</figcaption>
           </figure>
           <figure class="project-item project-item--deck">
-            <div class="deck-viewer"><div class="ppt-reader" data-path="public/projects/ppt/slides/waterloo" data-pages="34" data-pad="2" aria-label="WATERLOO SOUTH RENEWAL PROJECT，左右滑动查看全部34页"><div class="ppt-track" tabindex="0"></div><button class="ppt-arrow ppt-prev" type="button" aria-label="上一页">‹</button><button class="ppt-arrow ppt-next" type="button" aria-label="下一页">›</button><div class="ppt-progress"><span>01</span><i></i><span>34</span></div></div></div><figcaption>WATERLOO SOUTH RENEWAL PROJECT</figcaption>
+            <div class="deck-viewer"><div class="ppt-reader" data-path="public/projects/ppt/slides/waterloo" data-pages="34" data-pad="2" aria-label="WATERLOO SOUTH RENEWAL PROJECT，向下滚动查看全部34页"><div class="ppt-track" tabindex="0"></div><button class="ppt-arrow ppt-prev" type="button" aria-label="上一页">↑</button><button class="ppt-arrow ppt-next" type="button" aria-label="下一页">↓</button><div class="ppt-progress"><span>01</span><i></i><span>34</span></div></div></div><figcaption>WATERLOO SOUTH RENEWAL PROJECT</figcaption>
           </figure>
           <figure class="project-item project-item--deck">
             <div class="deck-viewer"><div class="ppt-reader" data-path="public/projects/ppt/slides/poster" data-pages="1" data-pad="1" aria-label="Poster 演示文稿，共1页"><div class="ppt-track" tabindex="0"></div><div class="ppt-progress"><span>01</span><i></i><span>01</span></div></div></div><figcaption>poster</figcaption>
@@ -251,52 +251,47 @@
         fragment.appendChild(image);
       }
       track.appendChild(fragment);
-      const go = direction => track.scrollBy({ left: direction * track.clientWidth, behavior: 'smooth' });
+      const go = direction => track.scrollBy({ top: direction * track.clientHeight, behavior: 'smooth' });
       reader.querySelector('.ppt-prev')?.addEventListener('click', () => go(-1));
       reader.querySelector('.ppt-next')?.addEventListener('click', () => go(1));
       track.addEventListener('keydown', event => {
-        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
           event.preventDefault();
           event.stopPropagation();
-          go(event.key === 'ArrowRight' ? 1 : -1);
+          go(['ArrowDown', 'PageDown', 'ArrowRight'].includes(event.key) ? 1 : -1);
         }
       });
       let dragging = false;
-      let dragStartX = 0;
+      let dragStartY = 0;
       let dragStartScroll = 0;
       track.addEventListener('pointerdown', event => {
         if (event.pointerType === 'touch' || event.button !== 0 || event.target.closest('button')) return;
         dragging = true;
-        dragStartX = event.clientX;
-        dragStartScroll = track.scrollLeft;
+        dragStartY = event.clientY;
+        dragStartScroll = track.scrollTop;
         track.classList.add('is-dragging');
         track.setPointerCapture(event.pointerId);
       });
       track.addEventListener('pointermove', event => {
         if (!dragging) return;
         event.preventDefault();
-        track.scrollLeft = dragStartScroll - (event.clientX - dragStartX);
+        track.scrollTop = dragStartScroll - (event.clientY - dragStartY);
       });
       const finishDrag = event => {
         if (!dragging) return;
         dragging = false;
         track.classList.remove('is-dragging');
         if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
-        const page = Math.round(track.scrollLeft / track.clientWidth);
-        track.scrollTo({ left: page * track.clientWidth, behavior: 'smooth' });
+        const page = Math.round(track.scrollTop / track.clientHeight);
+        track.scrollTo({ top: page * track.clientHeight, behavior: 'smooth' });
       };
       track.addEventListener('pointerup', finishDrag);
       track.addEventListener('pointercancel', finishDrag);
-      track.addEventListener('wheel', event => {
-        if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
-        event.preventDefault();
-        track.scrollLeft += event.deltaY;
-      }, { passive: false });
       let frame = 0;
       track.addEventListener('scroll', () => {
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => {
-          const page = Math.min(total, Math.max(1, Math.round(track.scrollLeft / track.clientWidth) + 1));
+          const page = Math.min(total, Math.max(1, Math.round(track.scrollTop / track.clientHeight) + 1));
           currentLabel.textContent = padPage(page);
           reader.querySelector('.ppt-prev')?.toggleAttribute('disabled', page === 1);
           reader.querySelector('.ppt-next')?.toggleAttribute('disabled', page === total);

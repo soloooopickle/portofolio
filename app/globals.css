@@ -836,6 +836,11 @@ nav a:hover::after,
   box-shadow: 0 30px 90px rgba(17, 17, 15, .08);
 }
 
+.website-viewer--nmti {
+  width: min(31vw, 500px);
+  height: min(70vh, 700px);
+}
+
 .website-viewer iframe {
   display: block;
   width: 100%;
@@ -896,9 +901,9 @@ nav a:hover::after,
 
 .deck-viewer {
   position: relative;
-  width: min(72vw, 1080px);
+  width: min(64vw, 1080px, calc((100vh - 190px) * 1.7778));
   aspect-ratio: 16 / 9;
-  max-height: min(70vh, 700px);
+  max-height: none;
   border: 1px solid rgba(17, 17, 15, .18);
   background: #fff;
   box-shadow: 0 30px 90px rgba(17, 17, 15, .08);
@@ -914,15 +919,16 @@ nav a:hover::after,
   position: relative;
   overflow: hidden;
   background: #fff;
-  touch-action: pan-x pinch-zoom;
+  touch-action: pan-y pinch-zoom;
 }
 
 .ppt-track {
   display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scroll-snap-type: y mandatory;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
   cursor: grab;
@@ -988,6 +994,14 @@ nav a:hover::after,
 }
 
 .ppt-progress i { flex: 1; height: 1px; background: currentColor; opacity: .35; }
+
+.ppt-reader:hover .ppt-progress,
+.project-index:has(.ppt-reader:hover) > .page-cursor,
+.project-index:has(.website-viewer:hover) > .page-cursor,
+.project-section:has(.ppt-reader:hover) > .page-status,
+.project-section:has(.website-viewer:hover) > .page-status {
+  opacity: 0 !important;
+}
 
 .deck-viewer iframe {
   display: block;
@@ -1260,6 +1274,7 @@ nav a.is-active {
 
   .masonry-grid { inset: 58px 0 0; }
   .deck-viewer { width: 88vw; height: auto; max-height: none; }
+  .website-viewer--nmti { width: 76vw; height: min(62svh, 560px); }
   .deck-viewer .ppt-track img { width: 100%; height: 100%; }
   .ppt-arrow { width: 30px; height: 48px; font-size: 20px; }
   .ppt-progress { bottom: 7px; padding: 5px 7px; font-size: 7px; }
