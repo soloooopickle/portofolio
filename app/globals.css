@@ -925,6 +925,13 @@ nav a:hover::after,
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  cursor: grab;
+}
+
+.ppt-track.is-dragging {
+  scroll-snap-type: none;
+  cursor: grabbing;
+  user-select: none;
 }
 
 .ppt-track::-webkit-scrollbar { display: none; }

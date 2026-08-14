@@ -57,7 +57,7 @@
       <section class="project-section is-theme-active" id="category-1">
         <header class="project-heading"><span>01</span><h2>AI DESIGN</h2><span>06 PROJECTS</span></header>
         <div class="masonry-grid">
-          <figure class="project-item project-item--website"><div class="website-viewer website-viewer--nmti"><img class="website-poster" src="public/projects/ai/nmti.png" alt="NMTI 牛马人格测试网站预览" loading="lazy" decoding="async"><iframe data-src="https://nmti-testing.netlify.app/" title="NMTI 牛马人格测试网站作品" loading="lazy" allow="fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe><div class="website-fallback"><span>INTERACTIVE WEBSITE</span><a href="https://nmti-testing.netlify.app/" target="_blank" rel="noopener noreferrer">OPEN IN SAFARI ↗</a></div><a class="website-launch" href="https://nmti-testing.netlify.app/" target="_blank" rel="noopener noreferrer">VISIT WEBSITE ↗</a></div><figcaption>nmti-testing.netlify.app</figcaption></figure>
+          <figure class="project-item project-item--website"><div class="website-viewer website-viewer--nmti"><img class="website-poster" src="public/projects/ai/nmti.png" alt="NMTI 牛马人格测试网站预览" loading="lazy" decoding="async"><iframe data-src="public/nmti-app/index.html" title="NMTI 牛马人格测试网站作品" loading="lazy" allow="fullscreen"></iframe><div class="website-fallback"><span>INTERACTIVE WEBSITE</span><a href="https://nmti-testing.netlify.app/" target="_blank" rel="noopener noreferrer">OPEN IN SAFARI ↗</a></div><a class="website-launch" href="https://nmti-testing.netlify.app/" target="_blank" rel="noopener noreferrer">VISIT WEBSITE ↗</a></div><figcaption>nmti-testing.netlify.app</figcaption></figure>
           <figure class="project-item project-item--website"><div class="website-viewer"><iframe data-src="https://forseason.netlify.app/" title="forseason.netlify.app 网站作品" loading="lazy" allow="camera; microphone; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe><div class="website-fallback"><span>CAMERA EXPERIENCE</span><a href="https://forseason.netlify.app/" target="_blank" rel="noopener noreferrer">OPEN IN SAFARI ↗</a></div><a class="website-launch" href="https://forseason.netlify.app/" target="_blank" rel="noopener noreferrer">VISIT WEBSITE ↗</a></div><figcaption>forseason.netlify.app</figcaption></figure>
           <figure class="project-item"><video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="public/projects/ai/app-overview.jpg"><source src="public/projects/ai/birthday-gift-safari.m4v" type="video/x-m4v"><source src="public/projects/ai/birthday-gift-web.mp4" type="video/mp4"></video><figcaption>生日礼盒</figcaption></figure>
           <figure class="project-item"><img src="public/projects/ai/character-guide.png" alt="角色图鉴" loading="lazy"><figcaption>角色图鉴</figcaption></figure>
@@ -261,6 +261,37 @@
           go(event.key === 'ArrowRight' ? 1 : -1);
         }
       });
+      let dragging = false;
+      let dragStartX = 0;
+      let dragStartScroll = 0;
+      track.addEventListener('pointerdown', event => {
+        if (event.pointerType === 'touch' || event.button !== 0 || event.target.closest('button')) return;
+        dragging = true;
+        dragStartX = event.clientX;
+        dragStartScroll = track.scrollLeft;
+        track.classList.add('is-dragging');
+        track.setPointerCapture(event.pointerId);
+      });
+      track.addEventListener('pointermove', event => {
+        if (!dragging) return;
+        event.preventDefault();
+        track.scrollLeft = dragStartScroll - (event.clientX - dragStartX);
+      });
+      const finishDrag = event => {
+        if (!dragging) return;
+        dragging = false;
+        track.classList.remove('is-dragging');
+        if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+        const page = Math.round(track.scrollLeft / track.clientWidth);
+        track.scrollTo({ left: page * track.clientWidth, behavior: 'smooth' });
+      };
+      track.addEventListener('pointerup', finishDrag);
+      track.addEventListener('pointercancel', finishDrag);
+      track.addEventListener('wheel', event => {
+        if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+        event.preventDefault();
+        track.scrollLeft += event.deltaY;
+      }, { passive: false });
       let frame = 0;
       track.addEventListener('scroll', () => {
         cancelAnimationFrame(frame);
