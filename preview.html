@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>RachelDDD — Visual Designer</title>
-  <link rel="stylesheet" href="app/globals.css?v=20260815-1" />
+  <link rel="stylesheet" href="app/globals.css?v=20260815-2" />
 </head>
 <body>
   <main class="portfolio-shell">
@@ -57,7 +57,7 @@
       <section class="project-section is-theme-active" id="category-1">
         <header class="project-heading"><span>01</span><h2>AI DESIGN</h2><span>06 PROJECTS</span></header>
         <div class="masonry-grid">
-          <figure class="project-item project-item--website"><div class="website-viewer website-viewer--nmti"><img class="website-poster" src="public/projects/ai/nmti.png" alt="NMTI 牛马人格测试网站预览" loading="lazy" decoding="async"><iframe data-src="public/nmti-app/index.html" title="NMTI 牛马人格测试网站作品" loading="lazy" allow="fullscreen"></iframe><div class="website-fallback"><span>INTERACTIVE WEBSITE</span><a href="https://nmti-testing.netlify.app/" target="_blank" rel="noopener noreferrer">OPEN IN SAFARI ↗</a></div><a class="website-launch" href="https://nmti-testing.netlify.app/" target="_blank" rel="noopener noreferrer">VISIT WEBSITE ↗</a></div><figcaption>nmti-testing.netlify.app</figcaption></figure>
+          <figure class="project-item project-item--website project-item--interactive"><div class="website-viewer website-viewer--nmti"><img class="website-poster" src="public/projects/ai/nmti.png" alt="NMTI 牛马人格测试网站预览" loading="lazy" decoding="async"><iframe data-src="public/nmti-app/index.html" title="NMTI 牛马人格测试网站作品" loading="eager" allow="fullscreen"></iframe></div><figcaption>nmti-testing.netlify.app</figcaption></figure>
           <figure class="project-item project-item--website"><div class="website-viewer"><iframe data-src="https://forseason.netlify.app/" title="forseason.netlify.app 网站作品" loading="lazy" allow="camera; microphone; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe><div class="website-fallback"><span>CAMERA EXPERIENCE</span><a href="https://forseason.netlify.app/" target="_blank" rel="noopener noreferrer">OPEN IN SAFARI ↗</a></div><a class="website-launch" href="https://forseason.netlify.app/" target="_blank" rel="noopener noreferrer">VISIT WEBSITE ↗</a></div><figcaption>forseason.netlify.app</figcaption></figure>
           <figure class="project-item"><video autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="public/projects/ai/app-overview.jpg"><source src="public/projects/ai/birthday-gift-safari.m4v" type="video/x-m4v"><source src="public/projects/ai/birthday-gift-web.mp4" type="video/mp4"></video><figcaption>生日礼盒</figcaption></figure>
           <figure class="project-item"><img src="public/projects/ai/character-guide.png" alt="角色图鉴" loading="lazy"><figcaption>角色图鉴</figcaption></figure>
@@ -411,7 +411,7 @@
 
     projectIndex.addEventListener('pointermove', event => {
       if (event.pointerType === 'touch') return;
-      if (event.target.closest('.ppt-reader')) {
+      if (event.target.closest('.ppt-reader, .website-viewer, iframe')) {
         projectIndex.classList.remove('is-cursor-active');
         return;
       }
@@ -429,8 +429,11 @@
       projectIndex.classList.add('is-cursor-active');
     });
     projectIndex.addEventListener('pointerleave', () => projectIndex.classList.remove('is-cursor-active'));
+    document.querySelectorAll('.ppt-reader, .website-viewer').forEach(interactiveArea => {
+      interactiveArea.addEventListener('pointerenter', () => projectIndex.classList.remove('is-cursor-active'));
+    });
     projectIndex.addEventListener('click', event => {
-      if (event.target.closest('a, button, .ppt-reader')) return;
+      if (event.target.closest('a, button, .ppt-reader, .website-viewer, iframe')) return;
       const clickedSection = event.target.closest('.project-section');
       const clickedTheme = themeSections.indexOf(clickedSection);
       if (clickedTheme >= 0) activeTheme = clickedTheme;

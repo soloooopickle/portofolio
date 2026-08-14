@@ -837,8 +837,17 @@ nav a:hover::after,
 }
 
 .website-viewer--nmti {
-  width: min(31vw, 500px);
-  height: min(70vh, 700px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 6;
+  width: min(90vw, 500px);
+  height: min(82vh, 720px);
+  max-height: calc(100% - 28px);
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  cursor: auto;
+  pointer-events: auto;
 }
 
 .website-viewer iframe {
@@ -847,6 +856,20 @@ nav a:hover::after,
   height: 100%;
   border: 0;
   background: #fff;
+}
+
+.website-viewer--nmti iframe {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: auto !important;
+  pointer-events: auto !important;
+  touch-action: auto;
+}
+
+.project-item--interactive,
+.project-item--interactive * {
+  cursor: auto;
 }
 
 .website-poster {
@@ -1100,6 +1123,13 @@ nav a:hover::after,
 .project-index.is-cursor-active,
 .project-index.is-cursor-active * {
   cursor: none !important;
+}
+
+.project-index.is-cursor-active:has(.website-viewer:hover),
+.project-index.is-cursor-active:has(.website-viewer:hover) *,
+.project-index.is-cursor-active:has(.ppt-reader:hover),
+.project-index.is-cursor-active:has(.ppt-reader:hover) * {
+  cursor: auto !important;
 }
 
 .project-index.is-cursor-active .page-cursor {
