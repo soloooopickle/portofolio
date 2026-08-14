@@ -12,7 +12,7 @@ a {
   cursor: pointer;
 }
 
-@media (min-width: 400px) and (max-height: 700px) {
+@media (min-width: 400px) and (max-height: 800px) {
   .p-10 {
     padding: 20px;
   }
